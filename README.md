@@ -20,7 +20,7 @@ Create `config.json` with the connection and bridge data:
   "instances": {
     "telegram": {
       "protocol": "telegram",
-      "token": "PUT_TELEGRAM_TOKEN_FROM_BOTFATHER_HERE
+      "token": "PUT_TELEGRAM_TOKEN_FROM_BOTFATHER_HERE"
     },
     "irc": {
       "protocol": "irc",
