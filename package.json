@@ -1,6 +1,6 @@
 {
   "name": "bridge",
-  "version": "1.0.0-beta1",
+  "version": "0.1.0-beta",
   "description": "cross-protocol message relay bot made with coffea",
   "bin": {
     "bot": "build/index.js"
@@ -49,7 +49,7 @@
     "rimraf": "^2.5.2"
   },
   "dependencies": {
-    "coffea": "1.0.0-beta15",
+    "coffea": "^1.0.0-beta17",
     "debug-dude": "^1.0.3"
   }
 }

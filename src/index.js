@@ -9,20 +9,23 @@ import { instances, bridges } from '../config.json'
 import { connect, message } from 'coffea'
 const networks = connect(instances)
 
-console.log(networks)
-
-// --
-
-networks.on('message', (evt, reply) => {
-  log('Received message event: %o', evt)
+const sendToAll = (evt) => (bridge) => bridge.map((node) => {
+  if (evt.network !== node.instance) { // don't relay back to original network
+    networks[node.instance].send({
+      ...evt,
+      chat: node.chat
+    })
+  }
 })
 
-networks.on('command', (evt, reply) => {
-  log('Received command event: %o', evt)
-
-  switch (evt.cmd) {
-    case 'say':
-      reply(message(evt.channel, evt.args.join(' ')))
-      break
-  }
+networks.on('message', (evt, reply) => {
+  log('received message event: %o', evt)
+  const activeBridges = bridges.filter(
+    (bridge) => bridge.reduce((res, node) => {
+      if (res) return true
+      else return node.instance == evt.network && node.chat == evt.chat
+    }, false)
+  )
+  log('detected bridges: %o', activeBridges)
+  activeBridges.map(sendToAll(evt))
 })
